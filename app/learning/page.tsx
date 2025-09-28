@@ -6,18 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { 
-  BookOpen, 
-  Clock, 
-  Trophy, 
-  Target,
-  Play,
-  CheckCircle,
-  Award,
-  TrendingUp,
-  Calendar,
-  ExternalLink
-} from 'lucide-react';
+import { BookOpen, Clock, Trophy, Target, Play, CircleCheck as CheckCircle, Award, TrendingUp, Calendar, ExternalLink } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
 
 export default function LearningPage() {
