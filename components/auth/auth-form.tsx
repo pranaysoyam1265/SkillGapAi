@@ -8,20 +8,44 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Mail, Lock, User, Loader as Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { useAuth } from '@/lib/auth-context';
 
 export function AuthForm() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { signIn, signUp } = useAuth();
 
-  const handleAuth = async (type: 'signin' | 'signup', formData: FormData) => {
+  const handleSignIn = async (formData: FormData) => {
     setIsLoading(true);
-    
-    // Simulate authentication
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    toast.success(`Successfully ${type === 'signin' ? 'signed in' : 'signed up'}!`);
-    setIsLoading(false);
-    router.push('/dashboard');
+    try {
+      const email = formData.get('email') as string;
+      const password = formData.get('password') as string;
+      
+      await signIn(email, password);
+      toast.success('Successfully signed in!');
+      router.push('/dashboard');
+    } catch (error) {
+      toast.error('Failed to sign in. Please check your credentials.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSignUp = async (formData: FormData) => {
+    setIsLoading(true);
+    try {
+      const email = formData.get('email') as string;
+      const password = formData.get('password') as string;
+      const name = formData.get('name') as string;
+      
+      await signUp(email, password, name);
+      toast.success('Account created successfully!');
+      router.push('/dashboard');
+    } catch (error) {
+      toast.error('Failed to create account. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -32,7 +56,7 @@ export function AuthForm() {
       </TabsList>
       
       <TabsContent value="signin" className="space-y-4">
-        <form action={(formData) => handleAuth('signin', formData)} className="space-y-4">
+        <form action={handleSignIn} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="signin-email">Email</Label>
             <div className="relative">
@@ -77,7 +101,7 @@ export function AuthForm() {
       </TabsContent>
       
       <TabsContent value="signup" className="space-y-4">
-        <form action={(formData) => handleAuth('signup', formData)} className="space-y-4">
+        <form action={handleSignUp} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="signup-name">Full Name</Label>
             <div className="relative">

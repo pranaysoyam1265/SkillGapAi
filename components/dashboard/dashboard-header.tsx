@@ -26,9 +26,19 @@ import {
 } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
+import { useAuth } from '@/lib/auth-context';
 
 export function DashboardHeader() {
   const { theme, setTheme } = useTheme();
+  const { user, logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-black/90 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-600">
@@ -66,7 +76,7 @@ export function DashboardHeader() {
           {/* Welcome Message */}
           <div className="hidden lg:flex flex-col items-center">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-              Welcome back, Alex!
+              Welcome back, {user?.name || 'User'}!
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-300">
               Ready to advance your career today?
@@ -110,9 +120,9 @@ export function DashboardHeader() {
               <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">Alex Johnson</p>
+                    <p className="text-sm font-medium leading-none">{user?.name || 'User'}</p>
                     <p className="text-xs leading-none text-muted-foreground">
-                      alex@example.com
+                      {user?.email || ''}
                     </p>
                   </div>
                 </DropdownMenuLabel>
@@ -126,12 +136,10 @@ export function DashboardHeader() {
                   <span>Settings</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <Link href="/auth">
-                  <DropdownMenuItem>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </Link>
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
