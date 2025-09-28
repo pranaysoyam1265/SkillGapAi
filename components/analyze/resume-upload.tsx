@@ -7,6 +7,9 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Upload, File, FileText, CircleCheck as CheckCircle, CircleAlert as AlertCircle, X, Loader as Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useAuth } from '@/lib/auth-context';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 interface UploadedFile {
   name: string;
@@ -19,6 +22,7 @@ interface UploadedFile {
 export function ResumeUpload() {
   const [isDragging, setIsDragging] = useState(false);
   const [files, setFiles] = useState<UploadedFile[]>([]);
+  const { user } = useAuth();
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -89,6 +93,15 @@ export function ResumeUpload() {
             setFiles(prev => prev.map(f => 
               f.name === file.name ? { ...f, status: 'completed' } : f
             ));
+            
+            // Update user's hasUploadedResume status in Firebase
+            if (user?.id) {
+              updateDoc(doc(db, 'users', user.id), {
+                hasUploadedResume: true,
+                updatedAt: new Date()
+              }).catch(console.error);
+            }
+            
             toast.success(`${file.name} analyzed successfully!`);
           }, 3000);
         }, 1000);

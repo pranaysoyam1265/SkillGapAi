@@ -12,65 +12,8 @@ import {
   Zap,
   Target
 } from 'lucide-react';
+import { useAuth } from '@/lib/auth-context';
 
-const skills = [
-  {
-    name: 'JavaScript',
-    category: 'Programming',
-    proficiency: 90,
-    marketDemand: 'High',
-    trend: 'growing',
-    experience: '5+ years',
-    isStrength: true,
-  },
-  {
-    name: 'React',
-    category: 'Frontend',
-    proficiency: 85,
-    marketDemand: 'High',
-    trend: 'growing',
-    experience: '3+ years',
-    isStrength: true,
-  },
-  {
-    name: 'Python',
-    category: 'Programming',
-    proficiency: 75,
-    marketDemand: 'High',
-    trend: 'growing',
-    experience: '2+ years',
-    isStrength: false,
-  },
-  {
-    name: 'Machine Learning',
-    category: 'AI/ML',
-    proficiency: 45,
-    marketDemand: 'Very High',
-    trend: 'growing',
-    experience: 'Beginner',
-    isStrength: false,
-    isGap: true,
-  },
-  {
-    name: 'Docker',
-    category: 'DevOps',
-    proficiency: 60,
-    marketDemand: 'High',
-    trend: 'stable',
-    experience: '1+ years',
-    isStrength: false,
-  },
-  {
-    name: 'Kubernetes',
-    category: 'DevOps',
-    proficiency: 30,
-    marketDemand: 'Very High',
-    trend: 'growing',
-    experience: 'Beginner',
-    isStrength: false,
-    isGap: true,
-  },
-];
 
 function getTrendIcon(trend: string) {
   switch (trend) {
@@ -105,6 +48,56 @@ function getProficiencyColor(proficiency: number) {
 }
 
 export function SkillsOverview() {
+  const { user } = useAuth();
+  
+  // In production, this would come from the user's actual skill analysis
+  // For now, only show if user has uploaded resume
+  if (!user?.hasUploadedResume) {
+    return null;
+  }
+
+  // Mock skills data - in production this would come from Firebase/ML analysis
+  const skills = [
+    {
+      name: 'JavaScript',
+      category: 'Programming',
+      proficiency: 90,
+      marketDemand: 'High',
+      trend: 'growing',
+      experience: '5+ years',
+      isStrength: true,
+    },
+    {
+      name: 'React',
+      category: 'Frontend',
+      proficiency: 85,
+      marketDemand: 'High',
+      trend: 'growing',
+      experience: '3+ years',
+      isStrength: true,
+    },
+    {
+      name: 'Machine Learning',
+      category: 'AI/ML',
+      proficiency: 45,
+      marketDemand: 'Very High',
+      trend: 'growing',
+      experience: 'Beginner',
+      isStrength: false,
+      isGap: true,
+    },
+    {
+      name: 'Kubernetes',
+      category: 'DevOps',
+      proficiency: 30,
+      marketDemand: 'Very High',
+      trend: 'growing',
+      experience: 'Beginner',
+      isStrength: false,
+      isGap: true,
+    },
+  ];
+
   const strengths = skills.filter(skill => skill.isStrength);
   const gaps = skills.filter(skill => skill.isGap);
 

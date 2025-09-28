@@ -297,7 +297,10 @@ export function CourseGrid() {
                     Preview
                     <Play className="h-3 w-3 ml-1" />
                   </Button>
-                  <Button size="sm">
+                  <Button 
+                    size="sm"
+                    onClick={() => window.open(`https://www.${course.provider.toLowerCase()}.com/course/${course.id}`, '_blank')}
+                  >
                     Enroll Now
                     <ExternalLink className="h-3 w-3 ml-1" />
                   </Button>

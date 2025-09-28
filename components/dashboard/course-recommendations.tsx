@@ -137,7 +137,14 @@ export function CourseRecommendations() {
                   </div>
                   <Button size="sm" variant="outline" className="text-xs">
                     <ExternalLink className="h-3 w-3 mr-1" />
-                    View Course
+                    <a 
+                      href={`https://www.${course.provider.toLowerCase()}.com/course/${course.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center"
+                    >
+                      Enroll Now
+                    </a>
                   </Button>
                 </div>
 
