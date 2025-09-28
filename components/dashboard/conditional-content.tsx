@@ -5,9 +5,11 @@
 +import { useAuth } from '@/lib/auth-context';
  
  export function ConditionalContent() {
+ }
 -  // This would check if user has uploaded resume
 -  const hasUploadedResume = false; // Replace with actual check
 +  const { user } = useAuth();
 +  const hasUploadedResume = user?.hasUploadedResume || false;
  
    if (!hasUploadedResume) {
+   }
