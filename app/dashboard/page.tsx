@@ -4,6 +4,7 @@ import { SkillsOverview } from '@/components/dashboard/skills-overview';
 import { RecentActivity } from '@/components/dashboard/recent-activity';
 import { CourseRecommendations } from '@/components/dashboard/course-recommendations';
 import { MarketTrends } from '@/components/dashboard/market-trends';
+import { ConditionalContent } from '@/components/dashboard/conditional-content';
 
 export default function DashboardPage() {
   return (
