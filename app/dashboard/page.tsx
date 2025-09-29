@@ -10,17 +10,8 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50/50 via-white to-purple-50/50 dark:from-black dark:via-black dark:to-black">
       <DashboardHeader />
       <div className="container mx-auto px-4 py-8 space-y-8">
-        <MetricsCards />
-        
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-8">
-            <SkillsOverview />
-            <MarketTrends />
-          </div>
-          <div className="space-y-8">
-            <CourseRecommendations />
-            <RecentActivity />
-          </div>
+        <div className="pt-4">
+          <ConditionalContent />
         </div>
       </div>
     </div>

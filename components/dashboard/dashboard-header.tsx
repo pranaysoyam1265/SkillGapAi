@@ -71,18 +71,14 @@ export function DashboardHeader() {
                 <span>Courses</span>
               </Link>
               <Link href="/learning" className="flex items-center space-x-2 text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-300 transition-colors">
-                <TrendingUp className="h-4 w-4" />
+                <BookOpen className="h-4 w-4" />
                 <span>Learning</span>
-              </Link>
-              <Link href="/profile" className="flex items-center space-x-2 text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-300 transition-colors">
-                <User className="h-4 w-4" />
-                <span>Profile</span>
               </Link>
             </nav>
           </div>
 
           {/* Welcome Message */}
-          <div className="hidden lg:flex flex-col items-center mt-4">
+          <div className="hidden lg:flex flex-col items-center">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
               Welcome back, {user?.name || 'User'}!
             </h2>
@@ -135,9 +131,11 @@ export function DashboardHeader() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Profile</span>
+                <DropdownMenuItem asChild>
+                  <Link href="/profile">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Settings className="mr-2 h-4 w-4" />
@@ -145,6 +143,7 @@ export function DashboardHeader() {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>
+                  <User className="mr-2 h-4 w-4" />
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>
                 </DropdownMenuItem>
