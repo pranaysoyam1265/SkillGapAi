@@ -7,6 +7,8 @@ import { SkillsOverview } from './skills-overview';
 import { CourseRecommendations } from './course-recommendations';
 import { RecentActivity } from './recent-activity';
 import { MarketTrends } from './market-trends';
+import { MarketDemandChart } from './market-demand-chart';
+import { SkillGapChart } from './skill-gap-chart';
 
 export function ConditionalContent() {
   const { user } = useAuth();
@@ -19,7 +21,12 @@ export function ConditionalContent() {
   return (
     <div className="space-y-8">
       <MetricsCards />
-      
+
+      <div className="grid lg:grid-cols-2 gap-8">
+        <MarketDemandChart />
+        <SkillGapChart />
+      </div>
+
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           <SkillsOverview />
